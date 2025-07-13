@@ -76,5 +76,5 @@ sudo cp usr/share/applications/btrfs-assistant.desktop /usr/share/applications
 # Create post install snapshot
 sudo snapper -c root create --description "Post install mirai linux snapshot"
 
-
+echo -e "\e[1;32m[Btrfs] setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the btrfs setup.\e[0m"
