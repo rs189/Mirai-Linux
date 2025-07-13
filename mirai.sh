@@ -1,10 +1,13 @@
 #!/bin/bash
 set -e
 
-sh ./rpm/rpm.sh
 sh ./x11/x11.sh
+sh ./rpm/rpm.sh
 sh ./wine/wine.sh
 sh ./java/java.sh
+
+sh ./firewalld/firewalld.sh
+sh ./selinux/selinux.sh
 
 sh ./btrfs/btrfs.sh
 
