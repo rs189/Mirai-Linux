@@ -57,11 +57,11 @@ fi
 sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
 
 # Copy config files
-sudo cp etc/snapper/configs/root /etc/snapper/configs/
-sudo cp etc/dnf/plugins/snapper.conf /etc/dnf/plugins/
+sudo cp btrfs/etc/snapper/configs/root /etc/snapper/configs/
+sudo cp btrfs/etc/dnf/plugins/snapper.conf /etc/dnf/plugins/
 
 sudo mkdir -p /etc/dnf/libdnf5-plugins/actions.d/
-sudo cp etc/dnf/libdnf5-plugins/actions.d/snapper.actions /etc/dnf/libdnf5-plugins/actions.d/
+sudo cp btrfs/etc/dnf/libdnf5-plugins/actions.d/snapper.actions /etc/dnf/libdnf5-plugins/actions.d/
 
 # Restart snapper daemon
 sudo systemctl restart snapperd
@@ -71,10 +71,10 @@ sudo systemctl enable --now snapper-timeline.timer
 sudo systemctl enable --now snapper-cleanup.timer
 
 # Copy btrfs-assistant desktop entry
-sudo cp usr/share/applications/btrfs-assistant.desktop /usr/share/applications
+sudo cp btrfs/usr/share/applications/btrfs-assistant.desktop /usr/share/applications
 
 # Create post install snapshot
-sudo snapper -c root create --description "Post install mirai linux snapshot"
+sudo snapper -c root create --description "Post install Mirai Linux snapshot"
 
 echo -e "\e[1;32m[Btrfs] setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the btrfs setup.\e[0m"
