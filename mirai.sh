@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-sh ./x11/x11.sh
+#sh ./x11/x11.sh
 sh ./rpm/rpm.sh
 sh ./wine/wine.sh
 sh ./java/java.sh
