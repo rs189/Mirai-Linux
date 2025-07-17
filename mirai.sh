@@ -1,13 +1,14 @@
 #!/bin/bash
 set -e
 
-#sh ./x11/x11.sh
+sh ./x11/x11.sh || true
 sh ./rpm/rpm.sh
 sh ./wine/wine.sh
-sh ./java/java.sh
+sh ./runtimes/java/java.sh
+sh ./runtimes/dotnet/dotnet.sh
 
-sh ./firewalld/firewalld.sh
-sh ./selinux/selinux.sh
+sh ./security/firewalld/firewalld.sh
+sh ./security/selinux/selinux.sh
 
 sh ./btrfs/btrfs.sh
 
