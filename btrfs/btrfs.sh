@@ -80,6 +80,7 @@ sudo snapper -c root set-config ALLOW_USERS=$USER SYNC_ACL=yes
 
 # Copy config files
 sudo cp btrfs/etc/snapper/configs/root /etc/snapper/configs/
+
 sudo cp btrfs/etc/dnf/plugins/snapper.conf /etc/dnf/plugins/
 
 sudo mkdir -p /etc/dnf/libdnf5-plugins/actions.d/
@@ -118,6 +119,9 @@ if [ "$ENABLE_HOME_SNAPSHOT" = "true" ]; then
     # Manually create snapper config for home
     sudo mkdir -p /etc/snapper/configs
     sudo cp /usr/share/snapper/config-templates/default /etc/snapper/configs/home
+
+    # Copy config files
+    sudo cp btrfs/etc/snapper/configs/home /etc/snapper/configs/home
 
     # Update sysconfig to include home config
     sudo sed -i 's/SNAPPER_CONFIGS="\(.*\)"/SNAPPER_CONFIGS="\1 home"/' /etc/sysconfig/snapper
