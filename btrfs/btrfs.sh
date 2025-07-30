@@ -14,7 +14,11 @@ sudo sed -i 's/SNAPPER_CONFIGS=".*"/SNAPPER_CONFIGS=""/' /etc/sysconfig/snapper
 # Get the btrfs filesystem UUID
 BTRFS_UUID=$(sudo blkid -s UUID -o value /dev/$(findmnt -n -o SOURCE / | cut -d'[' -f1 | sed 's|/dev/||'))
 
-SNAPSHOTS_EXISTS=$(sudo btrfs subvolume list / | grep -q '.snapshots' && echo "yes" || echo "no")
+if sudo btrfs subvolume show /.snapshots &>/dev/null; then
+    SNAPSHOTS_EXISTS="yes"
+else
+    SNAPSHOTS_EXISTS="no"
+fi
 
 if [ "$SNAPSHOTS_EXISTS" = "yes" ]; then
     if ! grep -q "/.snapshots" /etc/fstab; then
@@ -36,8 +40,21 @@ if [ "$SNAPSHOTS_EXISTS" = "yes" ]; then
     sudo systemctl restart snapperd
     
 else
-    # .snapshots doesn't exist, let snapper create it
-    sudo btrfs subvolume create /.snapshots
+    # .snapshots doesn't exist as a subvolume, ensure it's a proper btrfs subvolume
+    if sudo btrfs subvolume show /.snapshots &>/dev/null; then
+        : # Already a subvolume
+    elif [[ -d /.snapshots ]]; then
+        # If backup already exists, append a timestamp
+        if [[ -e /.snapshots.old ]]; then
+            timestamp=$(date +%s)
+            sudo mv /.snapshots "/.snapshots.old.$timestamp"
+        else
+            sudo mv /.snapshots /.snapshots.old
+        fi
+        sudo btrfs subvolume create /.snapshots
+    else
+        sudo btrfs subvolume create /.snapshots
+    fi
     
     # Add .snapshots to fstab
     if ! grep -q "/.snapshots" /etc/fstab; then
@@ -48,9 +65,11 @@ else
     sudo systemctl daemon-reload
     sudo mount /.snapshots 2>/dev/null || true
     
-    # Create snapper config
-    sudo snapper create-config /
+    # Manually create snapper config
+    sudo mkdir -p /etc/snapper/configs
     sudo cp /usr/share/snapper/config-templates/default /etc/snapper/configs/root
+    sudo sed -i 's/SNAPPER_CONFIGS=""/SNAPPER_CONFIGS="root"/' /etc/sysconfig/snapper
+    sudo systemctl restart snapperd
 fi
 
 # Set access controls
