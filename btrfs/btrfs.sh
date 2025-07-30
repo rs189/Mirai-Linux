@@ -1,6 +1,9 @@
 #!/bin/bash
 set -e
 
+# Enable snapper setup for /home (Experimental)
+ENABLE_HOME_SNAPSHOT=false
+
 # Remove old btrfs maintenance and install required packages
 sudo dnf remove -y btrfsmaintenance || true
 sudo dnf install -y btrfs-assistant dnf-plugin-snapper || true
@@ -94,6 +97,35 @@ sudo cp btrfs/usr/share/applications/btrfs-assistant.desktop /usr/share/applicat
 
 # Create post install snapshot
 sudo snapper -c root create --description "Post install Mirai Linux snapshot"
+
+# Snapper for /home
+if [ "$ENABLE_HOME_SNAPSHOT" = "true" ]; then
+    # ensure /home/.snapshots is a btrfs subvolume
+    if sudo btrfs subvolume show /home/.snapshots &>/dev/null; then
+        :
+    elif [[ -d /home/.snapshots ]]; then
+        if [[ -e /home/.snapshots.old ]]; then
+            timestamp=$(date +%s)
+            sudo mv /home/.snapshots "/home/.snapshots.old.$timestamp"
+        else
+            sudo mv /home/.snapshots /home/.snapshots.old
+        fi
+        sudo btrfs subvolume create /home/.snapshots
+    else
+        sudo btrfs subvolume create /home/.snapshots
+    fi
+
+    # Manually create snapper config for home
+    sudo mkdir -p /etc/snapper/configs
+    sudo cp /usr/share/snapper/config-templates/default /etc/snapper/configs/home
+
+    # Update sysconfig to include home config
+    sudo sed -i 's/SNAPPER_CONFIGS="\(.*\)"/SNAPPER_CONFIGS="\1 home"/' /etc/sysconfig/snapper
+
+    # Restart snapperd and take initial home snapshot
+    sudo systemctl restart snapperd
+    sudo snapper -c home create --description "Post install Mirai Linux home snapshot"
+fi
 
 echo -e "\e[1;32m[Btrfs] setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the btrfs setup.\e[0m"
