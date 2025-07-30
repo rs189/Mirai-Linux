@@ -12,5 +12,7 @@ sh ./security/selinux/selinux.sh
 
 sh ./btrfs/btrfs.sh
 
+sh ./systemd/chromium-pwa/chromium-pwa-init.sh
+
 echo -e "\e[1;32mMirai Linux setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the setup.\e[0m"

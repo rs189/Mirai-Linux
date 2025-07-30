@@ -1,0 +1,10 @@
+[Unit]
+Description=Mirai Linux Chromium PWA Service
+
+[Service]
+ExecStart=%h/.local/bin/chromium-pwa.sh
+Restart=always
+Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+[Install]
+WantedBy=default.target
