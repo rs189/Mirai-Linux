@@ -16,6 +16,7 @@ sh ./kde/x11/x11.sh || true
 sh ./systemd/systemd.sh
 
 sh ./btrfs/btrfs.sh
+sh ./swap/swap.sh
 
 echo -e "\e[1;32mMirai Linux setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the setup.\e[0m"
