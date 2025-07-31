@@ -1,7 +1,6 @@
 #!/bin/bash
-set -e
 
-sh ./rpm/rpm.sh
+sh ./dnf/dnf.sh
 sh ./flatpak/flatpak.sh
 
 sh ./runtimes/wine/wine.sh
@@ -13,9 +12,8 @@ sh ./security/firewalld/firewalld.sh
 sh ./security/selinux/selinux.sh
 
 sh ./kde/x11/x11.sh || true
-sh ./kde/krunner/krunner-steam.sh || true
 
-sh ./systemd/chromium-pwa/chromium-pwa-init.sh
+sh ./systemd/systemd.sh
 
 sh ./btrfs/btrfs.sh
 

@@ -44,5 +44,5 @@ kwriteconfig5 --file kcmvirtualkeyboardrc \
 source "$HOME/.profile"
 fcitx5-remote -r || true
 
-echo -e "\e[1;32m[RPM] Language setup complete.\e[0m"
+echo -e "\e[1;32m[dnf] Language setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the language setup.\e[0m"

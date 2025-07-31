@@ -8,4 +8,4 @@ sudo dnf install -y gstreamer1 gstreamer1-plugins-base gstreamer1-plugins-good g
 sudo akmods --force
 sudo modprobe v4l2loopback
 
-echo -e "\e[1;32m[RPM] Multimedia setup complete.\e[0m"
+echo -e "\e[1;32m[dnf] Multimedia setup complete.\e[0m"

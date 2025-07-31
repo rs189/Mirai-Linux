@@ -1,5 +1,5 @@
 [Unit]
-Description=Mirai Linux Chromium PWA Service
+Description=Mirai chromium pwa service
 
 [Service]
 ExecStart=%h/.local/bin/chromium-pwa.sh
