@@ -133,5 +133,5 @@ fi
 
 sh ./btrfs/grub-btrfs.sh
 
-echo -e "\e[1;32m[btrfs] setup complete.\e[0m"
+echo -e "\e[1;32m[btrfs] Setup complete.\e[0m"
 echo -e "\e[1;31mA system reboot is required to complete the btrfs setup.\e[0m"

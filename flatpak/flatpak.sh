@@ -5,4 +5,4 @@ sudo dnf install -y flatpak || true
 sudo flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo || true
 flatpak update -y || true
 
-echo -e "\e[1;32m[Flatpak] setup complete.\e[0m"
+echo -e "\e[1;32m[Flatpak] Setup complete.\e[0m"
