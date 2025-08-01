@@ -4,6 +4,9 @@ Description=Mirai chromium pwa service
 [Service]
 ExecStart=%h/.local/bin/chromium-pwa.sh
 Restart=always
+Environment=DISPLAY=:0
+Environment=WAYLAND_DISPLAY=wayland-0
+Environment=XAUTHORITY=%h/.Xauthority
 Environment=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 [Install]
