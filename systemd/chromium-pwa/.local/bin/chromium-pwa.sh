@@ -7,7 +7,7 @@ inotifywait -m -e create --format '%f' "$WATCH_DIR" | while read -r FILENAME; do
 
     FILEPATH="$WATCH_DIR/$FILENAME"
 
-    if [[ "$FILENAME" =~ ^(vivaldi|msedge)-.*\.desktop$ ]]; then
+    if [[ "$FILENAME" =~ ^(vivaldi|msedge|chrome|google-chrome|chromium|opera)-.*\.desktop$ ]]; then
         sleep 1.0
 
         if grep -q "^\[Desktop Entry\]" "$FILEPATH" && ! grep -q "^Categories=" "$FILEPATH"; then
