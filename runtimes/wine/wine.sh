@@ -1,14 +1,14 @@
 #!/bin/bash
-set -e
 
-wineserver -k
+command -v wineserver >/dev/null 2>&1 && wineserver -k >/dev/null 2>&1 || true
 killall -9 wineserver
 
 sudo dnf remove -y wine winetricks || true
 sudo dnf install -y vulkan vulkan-tools || true
+sudo dnf install -y cabextract || true
 
 # wine-10.4.r0.gc110178b ( TkG Staging Esync Fsync )
-WINE_MIRAI_ARCHIVE="wine/opt/wine-mirai.tar.gz"
+WINE_MIRAI_ARCHIVE="runtimes/wine/opt/wine-mirai.tar.gz"
 if [ -f "$WINE_MIRAI_ARCHIVE" ]; then
     echo "Extracting wine-mirai.tar.gz to /opt..."
     sudo tar -xzf "$WINE_MIRAI_ARCHIVE" -C /opt
@@ -23,7 +23,7 @@ if [ -d "$HOME/.wine" ]; then
 fi
 
 # Preconfigured prefix
-ARCHIVE_PATH="wine/wine-env.tar.gz"
+ARCHIVE_PATH="runtimes/wine/wine-env.tar.gz"
 if [ -f "$ARCHIVE_PATH" ]; then
     echo "Extracting wine-env.tar.gz to home directory..."
     tar -xzf "$ARCHIVE_PATH" -C "$HOME"
@@ -33,7 +33,7 @@ else
 fi
 
 # Winetricks
-sudo cp wine/usr/bin/winetricks /usr/bin/
+sudo cp runtimes/wine/usr/bin/winetricks /usr/bin/
 sudo chmod +x /usr/bin/winetricks
 
 # Libraries
