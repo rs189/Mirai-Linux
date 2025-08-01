@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+source "$(dirname "$0")/../../common.sh"
+
 sudo dnf install -y akmod-nvidia # rhel/centos users can use kmod-nvidia instead
 sudo dnf install -y xorg-x11-drv-nvidia-cuda #optional for cuda/nvdec/nvenc support
 
