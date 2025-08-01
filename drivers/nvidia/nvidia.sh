@@ -4,6 +4,8 @@ set -e
 sudo dnf install -y akmod-nvidia # rhel/centos users can use kmod-nvidia instead
 sudo dnf install -y xorg-x11-drv-nvidia-cuda #optional for cuda/nvdec/nvenc support
 
+sudo dnf install -y nvidia-vaapi-driver libva-utils vdpauinfo || true
+
 add_if_missing "blacklist nouveau" /etc/modprobe.d/blacklist-nouveau.conf
 add_if_missing "options nouveau modeset=0" /etc/modprobe.d/blacklist-nouveau.conf
 
