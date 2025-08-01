@@ -1,9 +1,14 @@
 #!/bin/bash
 
+ENABLE_BTRFS=false
+ENABLE_SWAP=false
 ENABLE_NVIDIA=false
 
 for arg in "$@"; do
     case "$arg" in
+        --btrfs)
+            ENABLE_BTRFS=true
+            ;;
         --nvidia)
             ENABLE_NVIDIA=true
             ;;
@@ -28,8 +33,15 @@ sh ./kde/x11/x11.sh || true
 
 sh ./systemd/systemd.sh
 
-sh ./btrfs/btrfs.sh
-sh ./swap/swap.sh
+if [ "$ENABLE_BTRFS" = true ]; then
+    sh ./btrfs/btrfs.sh
+fi
+
+if [ "$ENABLE_SWAP" = true ]; then
+    sh ./swap/swap.sh
+else
+    sh ./swap/earlyoom.sh
+fi
 
 if [ "$ENABLE_NVIDIA" = true ]; then
     sh ./drivers/nvidia/nvidia.sh
