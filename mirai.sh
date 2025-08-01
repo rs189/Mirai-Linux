@@ -3,6 +3,7 @@
 ENABLE_BTRFS=false
 ENABLE_SWAP=false
 ENABLE_NVIDIA=false
+ENABLE_KDE=true
 
 for arg in "$@"; do
     case "$arg" in
@@ -45,6 +46,10 @@ fi
 
 if [ "$ENABLE_NVIDIA" = true ]; then
     sh ./drivers/nvidia/nvidia.sh
+fi
+
+if [ "$ENABLE_KDE" = true ]; then
+    sh ./kde/kde.sh
 fi
 
 echo -e "\e[1;32mMirai Linux setup complete.\e[0m"

@@ -1,0 +1,13 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Email": "35667100+rs189@users.noreply.github.com",
+                "Name": "Mirai Linux"
+            }
+        ],
+        "Id": "M42",
+        "Name": "Mirai Forty-Two",
+        "License": "MIT"
+    }
+}
