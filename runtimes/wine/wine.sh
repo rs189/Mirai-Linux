@@ -38,6 +38,8 @@ else
     exit 1
 fi
 
+export WINEPREFIX="$HOME/.wine"
+
 # Add wine-mirai to PATH if missing
 add_if_missing 'export PATH=/opt/wine-mirai/bin:$PATH' "$HOME/.bashrc"
 source "$HOME/.bashrc"
@@ -61,6 +63,30 @@ winetricks -q corefonts allfonts cjkfonts
 # Registry
 wine reg add 'HKEY_CURRENT_USER\Software\Wine\X11 Driver' /t REG_SZ /v UseTakeFocus /d N /f 
 
+# DOTNET_ROOT
+wine reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment" \
+    /v DOTNET_ROOT \
+    /t REG_SZ \
+    /d "C:\\Program Files\\dotnet" \
+    /f
+
+# DOTNET_ROOT(x86)
+wine reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment" \
+    /v "DOTNET_ROOT(x86)" \
+    /t REG_SZ \
+    /d "C:\\Program Files\\dotnet" \
+    /f
+
+# Prepend Wine’s dotnet folder to the Windows PATH
+wine reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Manager\\Environment" \
+    /v Path \
+    /t REG_EXPAND_SZ \
+    /d "%SystemRoot%\\system32;%SystemRoot%;%SystemRoot%\\System32\\Wbem;C:\\Program Files\\dotnet;%Path%" \
+    /f
+
 winecfg -v win11
+
+
+sudo winetricks --self-update
 
 echo -e "\e[1;32m[Wine] setup complete.\e[0m"
