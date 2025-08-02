@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Wine Uninstaller
+Comment=Uninstall Microsoft Windows applications
+Exec=/opt/wine-mirai/bin/wine uninstaller
+Icon=wine
+Terminal=false
+Type=Application
+Categories=Utility;Wine;
+#NoDisplay=false

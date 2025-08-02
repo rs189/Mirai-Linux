@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Name=Wine Launcher
+Comment=Run Microsoft Windows applications
+Exec=/opt/wine-mirai/bin/wine %f
+Icon=wine
+Terminal=false
+Type=Application
+Categories=Utility;Wine;
+MimeType=application/x-ms-dos-executable;application/x-msi;application/x-ms-shortcut;
+Actions=RunWithWine;
+#NoDisplay=true
+
+[Desktop Action RunWithWine]
+Name=Run with Mirai Wine
+Exec=/opt/wine-mirai/bin/wine %f

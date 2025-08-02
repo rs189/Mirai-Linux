@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Name=Winetricks
+Comment=Run Winetricks
+Exec=/opt/wine-mirai/bin/winetricks
+Icon=wine
+Terminal=true
+Type=Application
+Categories=Utility;Wine;
+#NoDisplay=false

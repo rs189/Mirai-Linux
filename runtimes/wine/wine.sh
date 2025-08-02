@@ -86,7 +86,8 @@ wine reg add "HKEY_LOCAL_MACHINE\\SYSTEM\\CurrentControlSet\\Control\\Session Ma
 
 winecfg -v win11
 
-
 sudo winetricks --self-update
+
+cp runtimes/wine/.local/share/applications/* "$HOME/.local/share/applications/"
 
 echo -e "\e[1;32m[Wine] setup complete.\e[0m"
