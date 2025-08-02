@@ -11,4 +11,6 @@ sudo dnf install -y openh264 mozilla-openh264 libavcodec-freeworld gstreamer1-pl
 sudo akmods --force
 sudo modprobe v4l2loopback
 
+cp dnf/.config/vlc/vlcrc "$HOME/.config/vlc/vlcrc" || true
+
 echo -e "\e[1;32m[dnf] Multimedia setup complete.\e[0m"
