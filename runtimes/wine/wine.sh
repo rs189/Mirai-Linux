@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source "$(dirname "$0")/../../common.sh"
+
 command -v wineserver >/dev/null 2>&1 && wineserver -k >/dev/null 2>&1 || true
 killall -9 wineserver
 
@@ -19,6 +21,10 @@ fi
 
 if [ -d "$HOME/.wine" ]; then
     echo "Backing up existing .wine folder..."
+    if [ -d "$HOME/.wine.bak" ]; then
+        echo "Removing previous backup ~/.wine.bak..."
+        rm -rf "$HOME/.wine.bak"
+    fi
     mv "$HOME/.wine" "$HOME/.wine.bak"
 fi
 
@@ -32,13 +38,22 @@ else
     exit 1
 fi
 
+# Add wine-mirai to PATH if missing
+add_if_missing 'export PATH=/opt/wine-mirai/bin:$PATH' "$HOME/.bashrc"
+source "$HOME/.bashrc"
+
 # Winetricks
 sudo cp runtimes/wine/usr/bin/winetricks /usr/bin/
 sudo chmod +x /usr/bin/winetricks
 
+# Clear ~/.cache/wine
+rm -rf "$HOME/.cache/wine"
+
 # Libraries
-winetricks -q dotnet452 vcrun2005 vcrun2008 vcrun2015 dotnet48 dxvk
-wine regsvr32 wineasio.dll
+#winetricks -q dxvk
+winetricks -q dotnet452 vcrun2005 vcrun2008 vcrun2015 dotnet48
+#winetricks -q dotnet452 vcrun2005 vcrun2008 vcrun2015 dotnet48 dxvk
+#wine regsvr32 wineasio.dll
 
 # Fonts
 winetricks -q corefonts allfonts cjkfonts
