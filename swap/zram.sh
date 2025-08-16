@@ -2,11 +2,12 @@
 set -e
 
 sudo mkdir -p /etc/systemd/zram-generator.conf.d
-sudo cp ./swap/etc/systemd/zram-generator.conf /etc/systemd/zram-generator.conf
+sudo cp ./swap/etc/systemd/zram-generator.conf /etc/systemd/zram-generator.conf 2>/dev/null || true
 
 # Prevent systemd generator from racing
-sudo systemctl stop systemd-zram-setup@zram0.service 2>/dev/null || true
-sudo systemctl mask systemd-zram-setup@zram0.service 2>/dev/null || true
+sudo systemctl daemon-reload 2>/dev/null || true
+sudo systemctl unmask systemd-zram-setup@zram0.service 2>/dev/null || true
+sudo systemctl enable --now systemd-zram-setup@zram0.service 2>/dev/null || true
 
 # Compute desired zram size: min(ram/2, 8GiB)
 MEM_KB=$(awk '/MemTotal/ {print $2}' /proc/meminfo 2>/dev/null || echo 0)
